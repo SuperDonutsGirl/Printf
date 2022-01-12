@@ -25,7 +25,7 @@ int	ft_div_hexa(unsigned int nb)
 	return (i);
 }
 
-void	ft_print(unsigned int nb, char indicateur, t_data *data)
+void	ft_print(unsigned int nb, char indicateur, t_data *data, size_t int_rt)
 {
 	char		*base_upp16;
 	char		*base_low16;
@@ -33,12 +33,12 @@ void	ft_print(unsigned int nb, char indicateur, t_data *data)
 	base_upp16 = "0123456789ABCDEF";
 	base_low16 = "0123456789abcdef";
 	if (indicateur == 'X')
-		data->int_rt += write (1, &base_upp16[nb], 1);
+		int_rt += write (1, &base_upp16[nb], 1);
 	else if (indicateur == 'x')
-		data->int_rt += write (1, &base_low16[nb], 1);
+		int_rt += write (1, &base_low16[nb], 1);
 }
 
-void	ft_print_int_hexa(t_data *data, char indicateur)
+void	ft_print_int_hexa(t_data *data, char indicateur, size_t int_rt)
 {
 	int				i;
 	long long		n;
@@ -49,7 +49,7 @@ void	ft_print_int_hexa(t_data *data, char indicateur)
 	while (i != 0)
 	{
 		n = nb / i;
-		ft_print(n, indicateur, data);
+		ft_print(n, indicateur, data, int_rt);
 		nb = nb % i;
 		i = i / 16;
 	}

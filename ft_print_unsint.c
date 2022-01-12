@@ -52,10 +52,10 @@ char	*ft_unsitoa(unsigned int n)
 	return (unsitoa);
 }
 
-void	ft_print_unsigned_int(t_data *data)
+void	ft_print_unsigned_int(t_data *data, size_t int_rt)
 {
 	char			*unsitoa;
-	unsigned int				nb;
+	unsigned int	nb;
 	int				i;
 
 	i = 0;
@@ -63,10 +63,8 @@ void	ft_print_unsigned_int(t_data *data)
 	unsitoa = ft_unsitoa(nb);
 	while (unsitoa[i])
 	{
-		data->int_rt += write (1, &unsitoa[i], 1);
+		int_rt += write (1, &unsitoa[i], 1);
 		i++;
 	}
 	free (unsitoa);
 }
-
-

@@ -17,34 +17,24 @@ int	ft_datawidth(t_data *data, const char *str, int i)
 	char	*nb;
 	int		j;
 	int		n;
-	int 	retour;
+	int		rt;
 	int		size;
 
 	j = 0;
-	while (str[i] >= '0' && str[i] <= '9')
-	{
+	while (str[i++] >= '0' && str[i++] <= '9')
 		j++;
-		i++; //// ce i la qu'on doit retourner
-	}
-	retour = i - 1;
-//	printf("\nposition i = %c\n", str[i]);
-//	printf("taille du nb %i \n", j);
+	size = j;
+	rt = i - 1;
 	if (j == 0)
 		size = 1;
-	else
-		size = j;
 	nb = (char *)malloc(sizeof(char) * size + 1);
 	if (!nb)
 		return (0);
 	nb[j] = '\0';
 	while (j--)
 		nb[j] = str[--i];
-	//printf("la string nb = %s\n", nb);
 	n = ft_atoi(nb);
-	//printf("\nnb = %i \n", n);
 	data->width = n;
 	free(nb);
-	
-	//printf("la string nb = %s\n", nb);
-	return (retour);
+	return (rt);
 }

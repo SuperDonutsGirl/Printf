@@ -13,19 +13,6 @@
 #include "ft_printf.h"
 #include <limits.h>
 
-t_data	*ft_initialize_data(t_data *data)
-{
-	data -> int_rt = 0;
-	data -> minus = 0;
-	data -> zero = 0;
-	data -> pr = 0;
-	data -> sp = 0;
-	data -> plus = 0;
-	data -> hashtag = 0;
-	data -> width = 0;
-	return (data);
-}
-
 t_data	*ft_reset_data(t_data *data)
 {
 	data -> minus = 0;
@@ -40,8 +27,8 @@ t_data	*ft_reset_data(t_data *data)
 
 int	ft_is_indicateur(char c)
 {
-	char *type;
-	int	i;
+	char	*type;
+	int		i;
 
 	type = "cspiduxX";
 	i = 0;
@@ -78,61 +65,60 @@ int	ft_check_flag(t_data *data, const char *str, int i)
 	return (i);
 }
 
-void	ft_ttt_conversion(t_data *data, char indicateur)
+void	ft_ttt_conversion(t_data *data, char indicateur, size_t int_rt)
 {
 	if (indicateur == 'c')
-		ft_print_char(data);
+		ft_print_char(data, int_rt);
 	else if (indicateur == 's')
-		ft_print_str(data);
+		ft_print_str(data, int_rt);
 	else if (indicateur == 'p')
-		ft_print_ptr(data);
+		ft_print_ptr(data, int_rt);
 	else if (indicateur == 'd' || indicateur == 'i')
-		ft_print_int(data);
+		ft_print_int(data, int_rt);
 	else if (indicateur == 'u')
-		ft_print_unsigned_int(data);
+		ft_print_unsigned_int(data, int_rt);
 	else if (indicateur == 'x' || indicateur == 'X')
-		ft_print_int_hexa(data, indicateur);
+		ft_print_int_hexa(data, indicateur, int_rt);
 	else if (indicateur == '%')
-		data->int_rt += write (1, "%", 1);
+		int_rt += write (1, "%", 1);
+	printf("\nint rt = %i\n", int_rt);
 }
 
 int	ft_printf(const char *str, ...)
 {
 	int		i;
-	int		echo;
+	size_t		int_rt;
 	t_data	*data;
 
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (-1);
-	ft_initialize_data(data);
+	ft_reset_data(data);
 	va_start(data->params, str);
-	echo = 0;
+	int_rt = 0;
 	i = -1;
 	while (str[++i])
 	{
 		if (str[i] == '%')
 		{
 			i = ft_check_flag(data, str, i + 1);
-			ft_ttt_conversion(data, str[i]);
+			ft_ttt_conversion(data, str[i], int_rt);
 		}
 		else
-			echo += write (1, &str[i], 1);
+			int_rt += write (1, &str[i], 1);
 	}
-	echo += data->int_rt;
 	va_end(data->params);
 	free(data);
-	return (echo);
+	return (int_rt);
 }
 
-/*
  #include <stdio.h>
  #include <stdlib.h>
 
  int main(void)
  {
  	int				c = 77;
- 	char			*s = "";
+ 	char			*s = NULL;
  	int				i = 55;
  	int				d =	2147486;
  	unsigned int	u = 101;
@@ -145,8 +131,7 @@ int	ft_printf(const char *str, ...)
  	printf("\n\n");
  	printf("my int printf   : %i \n" , rslt);
  	printf("real int printf : %i \n" , realrslr);
- }*/
-
+ }
 
 /*
 #include <stdio.h>
@@ -159,5 +144,4 @@ int main (void)
 
 	printf("\nmy    : %i \n" , rslt);
  	printf("\nreal  : %i \n" , real);
-
 }*/

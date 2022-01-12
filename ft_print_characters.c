@@ -12,15 +12,15 @@
 
 #include "ft_printf.h"
 
-void	ft_print_char(t_data *data)
+void	ft_print_char(t_data *data, size_t int_rt)
 {
 	char	c;
 
 	c = va_arg(data->params, int);
-	data->int_rt += write (1, &c, 1);
+	int_rt += write (1, &c, 1);
 }
 
-void	ft_print_str(t_data *data)
+void	ft_print_str(t_data *data, size_t int_rt)
 {
 	int		i;
 	char	*str;
@@ -28,17 +28,18 @@ void	ft_print_str(t_data *data)
 	i = 0;
 	str = va_arg(data->params, char *);
 	if (str == NULL)
-		data->int_rt += write(1, "(null)", 6);
+		int_rt += write(1, "(null)", 6);
 	else
-	{	while (str[i])
+	{	
+		while (str[i])
 		{
-			data->int_rt += write (1, &str[i], 1);
+			int_rt += write (1, &str[i], 1);
 			i++;
 		}
 	}
 }
 
-void	ft_print_int(t_data *data)
+void	ft_print_int(t_data *data, size_t int_rt)
 {
 	int		nb;
 	char	*nbr;
@@ -49,7 +50,8 @@ void	ft_print_int(t_data *data)
 	nbr = ft_itoa(nb);
 	while (nbr[i])
 	{
-		data->int_rt += write (1, &nbr[i], 1);
+		write (1, &nbr[i], 1);
+		int_rt++;
 		i++;
 	}
 	free (nbr);

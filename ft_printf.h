@@ -19,36 +19,30 @@
 
 typedef struct s_data
 {
-   va_list	params;
-   size_t	int_rt;
-   size_t   minus;
-   size_t	zero;
-   size_t	pr;
-   size_t	sp;
-   size_t	plus;
-   size_t	hashtag;
-   size_t	width;
-}  t_data;
+	va_list	params;
+	size_t	int_rt;
+	size_t	minus;
+	size_t	zero;
+	size_t	pr;
+	size_t	sp;
+	size_t	plus;
+	size_t	hashtag;
+	size_t	width;
+}	t_data;
 
 t_data	*ft_initialize_data(t_data *data);
 
 int		ft_printf(const char *str, ...);
-void	ft_print_char(t_data *data);
-void	ft_print_str(t_data *data);
-void	ft_print_int(t_data *data);
-void	ft_print_unsigned_int(t_data *data);
-void	ft_print_int_hexa(t_data *data, char indicateur);
-void	ft_print_ptr(t_data *data);
+void	ft_print_char(t_data *data, size_t int_rt);
+void	ft_print_str(t_data *data, size_t int_rt);
+void	ft_print_int(t_data *data, size_t int_rt);
+void	ft_print_unsigned_int(t_data *data, size_t int_rt);
+void	ft_print_int_hexa(t_data *data, char indicateur, size_t int_rt);
+void	ft_print_ptr(t_data *data, size_t int_rt);
 char	*ft_itoa(int n);
-
-void	ft_ttt_conversion(t_data *data, char indicateur);
-
-
-
-
-
-
-int	ft_atoi(char *str);
-int	ft_datawidth(t_data *data, const char *str, int i);
+void	ft_ttt_conversion(t_data *data, char indicateur, size_t int_rt);
+int		ft_atoi(char *str);
+//bonus
+int		ft_datawidth(t_data *data, const char *str, int i);
 
 #endif

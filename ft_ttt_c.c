@@ -1,43 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tttzero.c                                       :+:      :+:    :+:   */
+/*   ft_ttt_c.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pamartin <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/10 08:26:13 by pamartin          #+#    #+#             */
-/*   Updated: 2022/01/10 08:26:15 by pamartin         ###   ########.fr       */
+/*   Created: 2022/01/13 13:45:19 by pamartin          #+#    #+#             */
+/*   Updated: 2022/01/13 13:45:19 by pamartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_datawidth(t_data *data, const char *str, int i)
+void	ft_width(t_data *data)
 {
-	char	*nb;
-	int		j;
-	int		n;
-	int		rt;
-	int		size;
+	size_t	nbsp;
 
-	j = 0;
-	while (str[i] >= '0' && str[i] <= '9')
+	nbsp = data->width - 1;
+	while (nbsp-- > 0)
+		data->int_rt += write(1, " ", 1);
+}
+
+void	ttt_c(t_data *data)
+{
+	char	c;
+
+	c = va_arg(data->params, int);
+	if (data->width > 1 && data->minus == 0)
 	{
-		i++;
-		j++;
+		ft_width(data);
+		data->int_rt += write (1, &c, 1);
 	}
-	size = j;
-	rt = i - 1;
-	if (j == 0)
-		size = 1;
-	nb = (char *)malloc(sizeof(char) * size + 1);
-	if (!nb)
-		return (0);
-	nb[j] = '\0';
-	while (j--)
-		nb[j] = str[--i];
-	n = ft_atoi(nb);
-	data->width = n;
-	free(nb);
-	return (rt);
+	else if (data->width > 1 && data->minus == 1)
+	{
+		data->int_rt += write (1, &c, 1);
+		ft_width(data);
+	}
+	else
+		data->int_rt += write (1, &c, 1);
 }

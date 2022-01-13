@@ -25,23 +25,19 @@ unsigned long	ft_div_hexa_ptr(unsigned long adr)
 	return (i);
 }
 
-void	ft_print_ptr(t_data *data, size_t int_rt)
+void	ft_print_ptr(t_data *data, unsigned long adr)
 {
 	char				*base16;
 	unsigned long		ptr;
 	unsigned long		i;
-	unsigned long		adr;
 
-	adr = va_arg(data->params, unsigned long);
 	base16 = "0123456789abcdef";
-	write(1, "0x", 2);
-	int_rt += 2;
+	data->int_rt += write(1, "0x", 2);
 	i = ft_div_hexa_ptr(adr);
 	while (i != 0)
 	{
 		ptr = adr / i;
-		write (1, &base16[ptr], 1);
-		int_rt += 1;
+		data->int_rt += write (1, &base16[ptr], 1);
 		adr = adr % i;
 		i = i / 16;
 	}

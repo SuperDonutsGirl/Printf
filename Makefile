@@ -19,7 +19,7 @@ OPTION		= -I ${HEADER} -c
 FILLSRC		= ft_printf.c \
 				ft_print_characters.c ft_print_unsint.c ft_itoa.c \
 				ft_print_hexa.c ft_print_ptr_hexa.c \
-				ft_width.c ft_atoi.c 
+				ft_width.c ft_atoi.c  ft_ttt_xX.c ft_ttt_u.c ft_ttt_c.c ft_strcmp.c ft_ttt_s.c ft_ttt_di.c ft_ttt_p.c
 
 FILLOBJ		= ${FILLSRC:.c=.o}
 
@@ -29,8 +29,8 @@ FILLOBJ		= ${FILLSRC:.c=.o}
 ${NAME}:	${FILLOBJ}
 	ar -rc ${NAME} ${FILLOBJ}
 
-#bonus: ${FILLOBJ}
-	#ar -rc ${NAME} ${FILLOBJ}
+bonus: ${FILLOBJ}
+	ar -rc ${NAME} ${FILLOBJ}
 
 all:		${NAME}
 

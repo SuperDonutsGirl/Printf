@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-unsigned long	ft_div_hexa_ptr(unsigned long adr)
+static unsigned long	ft_div_hexa_ptr(unsigned long adr)
 {
 	unsigned long	i;
 
@@ -25,19 +25,23 @@ unsigned long	ft_div_hexa_ptr(unsigned long adr)
 	return (i);
 }
 
-void	ft_print_ptr(t_data *data, unsigned long adr)
+void	ft_print_ptr(t_data *data)
 {
 	char				*base16;
 	unsigned long		ptr;
 	unsigned long		i;
+	unsigned long		adr;
 
+	adr = va_arg(data->params, unsigned long);
 	base16 = "0123456789abcdef";
-	data->int_rt += write(1, "0x", 2);
+	write(1, "0x", 2);
+	data->int_rt += 2;
 	i = ft_div_hexa_ptr(adr);
 	while (i != 0)
 	{
 		ptr = adr / i;
-		data->int_rt += write (1, &base16[ptr], 1);
+		write (1, &base16[ptr], 1);
+		data->int_rt += 1;
 		adr = adr % i;
 		i = i / 16;
 	}

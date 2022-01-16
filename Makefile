@@ -10,37 +10,48 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= libftprintf.a
-HEADER		= ft_printf.h
-CC			= gcc
-FLAG		= -Wall -Wextra -Werror
-OPTION		= -I ${HEADER} -c
+NAME			= libftprintf.a
+HEADER			= ft_printf.h
+CC				= gcc
+FLAG			= -Wall -Wextra -Werror
+OPTION			= -I ${HEADER} -c
 
-FILLSRC		= ft_printf.c \
-				ft_print_characters.c ft_print_unsint.c ft_itoa.c \
-				ft_print_hexa.c ft_print_ptr_hexa.c \
-				ft_width.c ft_atoi.c  ft_ttt_xX.c ft_ttt_u.c ft_ttt_c.c ft_strcmp.c ft_ttt_s.c ft_ttt_di.c ft_ttt_p.c
+SRC				= 	ft_printf.c 		 \
+					ft_itoa.c \
+					ft_print_characters.c ft_print_unsint.c \
+					ft_print_hexa.c ft_print_ptr_hexa.c \
+					ft_width_bonus.c 			ft_atoi_bonus.c 					ft_ttt_xX_bonus.c \
+					ft_ttt_u_bonus.c 			ft_ttt_c_bonus.c 					\
+					ft_ttt_s_bonus.c 			ft_ttt_di_bonus.c 					ft_ttt_p_bonus.c \
+					ft_print_hexa_bonus.c 		ft_print_bonus.c	ft_strcmp.c
+					
+					
+				  
+OBJ				= ${SRC:.c=.o}
 
-FILLOBJ		= ${FILLSRC:.c=.o}
+###			BONUS		PART
+BONUS			=		
+
+BONNUSOBJ = 	${BONUS:.c=.o}
 
 .c.o:
 	${CC} ${FLAG} ${OPTION} $< -o ${<:.c=.o}
 
-${NAME}:	${FILLOBJ}
-	ar -rc ${NAME} ${FILLOBJ}
-
-bonus: ${FILLOBJ}
-	ar -rc ${NAME} ${FILLOBJ}
+${NAME}:	${OBJ}
+	ar -rc ${NAME} ${OBJ} 
 
 all:		${NAME}
 
+bonus: ${OBJ} ${BONNUSOBJ}
+	ar -rc ${NAME} ${OBJ} ${BONUS}
+
 clean:
-	rm ${FILLOBJ}
+	rm -f ${OBJ} ${BONNUSOBJ}
 
 fclean:		clean
-	rm ${NAME}
+	rm -f ${NAME}
 
 re:			fclean all
 
-#.PHONY: bonus all clean fclean re 
+.PHONY:	all bonus clean fclean re 
 

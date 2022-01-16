@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_hexa.c                                    :+:      :+:    :+:   */
+/*   ft_print_hexa_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pamartin <pamartin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/02 17:40:02 by pamartin          #+#    #+#             */
-/*   Updated: 2022/01/02 17:40:03 by pamartin         ###   ########.fr       */
+/*   Created: 2022/01/15 22:56:40 by pamartin          #+#    #+#             */
+/*   Updated: 2022/01/15 22:56:40 by pamartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_div_hexa(unsigned int nb)
+int	ft_div_hexa(unsigned int nb)
 {
 	int	i;
 
@@ -25,7 +25,7 @@ static int	ft_div_hexa(unsigned int nb)
 	return (i);
 }
 
-void	ft_print(unsigned int nb, char indicateur, t_data *data)
+void	ft_printb(unsigned int nb, char indicateur, t_data *data)
 {
 	char		*base_upp16;
 	char		*base_low16;
@@ -38,19 +38,48 @@ void	ft_print(unsigned int nb, char indicateur, t_data *data)
 		data->int_rt += write (1, &base_low16[nb], 1);
 }
 
-void	ft_print_int_hexa(t_data *data, char indicateur)
+void	ft_printb_int_hexa(t_data *data, char indicateur, unsigned int nb)
 {
 	int				i;
 	long long		n;
-	unsigned int	nb;
-
-	nb = va_arg(data->params, unsigned int);
+	
 	i = ft_div_hexa(nb);
 	while (i != 0)
 	{
 		n = nb / i;
-		ft_print(n, indicateur, data);
+		ft_printb(n, indicateur, data);
 		nb = nb % i;
+		i = i / 16;
+	}
+}
+
+unsigned long	ft_div_hexa_ptr(unsigned long adr)
+{
+	unsigned long	i;
+
+	i = 1;
+	while (adr / 16 != 0)
+	{
+		i *= 16;
+		adr = adr / 16;
+	}
+	return (i);
+}
+
+void	ft_printb_ptr(t_data *data, unsigned long adr)
+{
+	char				*base16;
+	unsigned long		ptr;
+	unsigned long		i;
+
+	base16 = "0123456789abcdef";
+	data->int_rt += write(1, "0x", 2);
+	i = ft_div_hexa_ptr(adr);
+	while (i != 0)
+	{
+		ptr = adr / i;
+		data->int_rt += write (1, &base16[ptr], 1);
+		adr = adr % i;
 		i = i / 16;
 	}
 }

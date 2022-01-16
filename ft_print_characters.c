@@ -12,14 +12,47 @@
 
 #include "ft_printf.h"
 
-void	ft_print_str(t_data *data, char *str)
+void	ft_print_char(t_data *data)
 {
+	char	c;
+
+	c = va_arg(data->params, int);
+	data->int_rt += write (1, &c, 1);
+}
+
+void	ft_print_str(t_data *data)
+{
+	int		i;
+	char	*str;
+
+	i = 0;
+	str = va_arg(data->params, char *);
+	if (str == NULL)
+		data->int_rt += write(1, "(null)", 6);
+	else
+	{	
+		while (str[i])
+		{
+			data->int_rt += write (1, &str[i], 1);
+			i++;
+		}
+	}
+}
+
+void	ft_print_int(t_data *data)
+{
+	int		nb;
+	char	*nbr;
 	int		i;
 
 	i = 0;
-	while (str[i])
+	nb = va_arg(data->params, int);
+	nbr = ft_itoa(nb);
+	while (nbr[i])
 	{
-		data->int_rt += write (1, &str[i], 1);
+		write (1, &nbr[i], 1);
+		data->int_rt++;
 		i++;
 	}
+	free (nbr);
 }

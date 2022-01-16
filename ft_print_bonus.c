@@ -1,18 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_unsint.c                                  :+:      :+:    :+:   */
+/*   ft_print_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pamartin <pamartin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/02 14:26:37 by pamartin          #+#    #+#             */
-/*   Updated: 2022/01/02 14:26:38 by pamartin         ###   ########.fr       */
+/*   Created: 2022/01/15 22:57:31 by pamartin          #+#    #+#             */
+/*   Updated: 2022/01/15 22:57:32 by pamartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_unsintlen(unsigned int nb)
+void	ft_printb_str(t_data *data, char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		data->int_rt += write (1, &str[i], 1);
+		i++;
+	}
+}
+
+int	ft_unsintlen(unsigned int nb)
 {
 	int			i;
 	long long	n;
@@ -29,7 +41,7 @@ static int	ft_unsintlen(unsigned int nb)
 	return (i);
 }
 
-static char	*ft_unsitoa(unsigned int n)
+char	*ft_unsitoa(unsigned int n)
 {
 	char		*unsitoa;
 	int			i;
@@ -52,14 +64,10 @@ static char	*ft_unsitoa(unsigned int n)
 	return (unsitoa);
 }
 
-void	ft_print_unsigned_int(t_data *data)
+void	ft_printb_unsigned_int(t_data *data, int i, unsigned long long nb)
 {
 	char			*unsitoa;
-	unsigned int	nb;
-	int				i;
 
-	i = 0;
-	nb = va_arg(data->params, unsigned long long int);
 	unsitoa = ft_unsitoa(nb);
 	while (unsitoa[i])
 	{
